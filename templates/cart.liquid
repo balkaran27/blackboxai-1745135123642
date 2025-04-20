@@ -1,0 +1,57 @@
+{% comment %}
+  One-page checkout template for IMPRESSA luxury Shopify theme
+{% endcomment %}
+
+<div class="max-w-4xl mx-auto p-8 bg-porcelain-white rounded-lg shadow-lg mt-12">
+  <h2 class="text-3xl font-bold warm-taupe mb-6 text-center">Checkout</h2>
+
+  <form method="post" action="/cart" novalidate>
+    <table class="w-full mb-6 border border-smoked-charcoal rounded">
+      <thead>
+        <tr class="bg-smoked-charcoal text-porcelain-white">
+          <th class="p-3 text-left">Product</th>
+          <th class="p-3 text-center">Quantity</th>
+          <th class="p-3 text-right">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+        <tr class="border-b border-smoked-charcoal">
+          <td class="p-3">{{ item.product.title }}</td>
+          <td class="p-3 text-center">{{ item.quantity }}</td>
+          <td class="p-3 text-right">{{ item.line_price | money }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr class="font-bold">
+          <td colspan="2" class="p-3 text-right">Total</td>
+          <td class="p-3 text-right">{{ cart.total_price | money }}</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="mb-6">
+      <label for="checkout_email" class="block mb-2 font-semibold deep-onyx">Email</label>
+      <input type="email" id="checkout_email" name="checkout[email]" required class="w-full p-3 border border-smoked-charcoal rounded" />
+    </div>
+
+    <div class="mb-6">
+      <label for="checkout_shipping_address" class="block mb-2 font-semibold deep-onyx">Shipping Address</label>
+      <textarea id="checkout_shipping_address" name="checkout[shipping_address]" rows="3" required class="w-full p-3 border border-smoked-charcoal rounded"></textarea>
+    </div>
+
+    <div class="mb-6">
+      <label for="checkout_payment_method" class="block mb-2 font-semibold deep-onyx">Payment Method</label>
+      <select id="checkout_payment_method" name="checkout[payment_method]" required class="w-full p-3 border border-smoked-charcoal rounded">
+        <option value="">Select a payment method</option>
+        <option value="credit_card">Credit Card</option>
+        <option value="paypal">PayPal</option>
+      </select>
+    </div>
+
+    <button type="submit" class="w-full bg-warm-taupe text-porcelain-white font-bold py-3 rounded hover:bg-smoked-charcoal transition">
+      Complete Purchase
+    </button>
+  </form>
+</div>
