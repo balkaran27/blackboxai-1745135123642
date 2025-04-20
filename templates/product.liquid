@@ -1,0 +1,23 @@
+{% comment %}
+  Product page template for IMPRESSA luxury Shopify theme
+{% endcomment %}
+
+<div class="max-w-5xl mx-auto py-12 px-4 bg-porcelain-white rounded-lg shadow-lg mt-12">
+  <div class="flex flex-col md:flex-row gap-8">
+    <div class="md:w-1/2">
+      <img src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}" class="w-full rounded-lg object-cover" />
+    </div>
+    <div class="md:w-1/2 flex flex-col justify-center">
+      <h1 class="text-4xl font-bold warm-taupe mb-4">{{ product.title }}</h1>
+      <p class="text-smoked-charcoal mb-6">{{ product.description }}</p>
+      <p class="text-2xl font-semibold deep-onyx mb-6">{{ product.price | money }}</p>
+
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+        <button type="submit" class="bg-warm-taupe text-porcelain-white font-bold py-3 px-6 rounded hover:bg-smoked-charcoal transition">
+          Add to Cart
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
