@@ -1,0 +1,84 @@
+{% comment %}
+  Homepage template for IMPRESSA luxury Shopify theme
+{% endcomment %}
+
+<div class="relative bg-porcelain-white">
+  <!-- Sliding banners carousel -->
+  <div id="banner-carousel" class="relative overflow-hidden">
+    <div class="carousel-inner relative w-full overflow-hidden">
+      <!-- Slide 1 -->
+      <div class="carousel-item active relative float-left w-full">
+        <img src="{{ 'banner1.jpg' | asset_url }}" alt="Banner 1" class="w-full object-cover h-96" />
+        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+          <h2 class="text-4xl font-bold text-porcelain-white">Welcome to IMPRESSA</h2>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="carousel-item relative float-left w-full hidden">
+        <img src="{{ 'banner2.jpg' | asset_url }}" alt="Banner 2" class="w-full object-cover h-96" />
+        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+          <h2 class="text-4xl font-bold text-porcelain-white">Luxury Products for You</h2>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="carousel-item relative float-left w-full hidden">
+        <img src="{{ 'banner3.jpg' | asset_url }}" alt="Banner 3" class="w-full object-cover h-96" />
+        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+          <h2 class="text-4xl font-bold text-porcelain-white">Experience Elegance</h2>
+        </div>
+      </div>
+    </div>
+    <!-- Carousel controls -->
+    <button id="prev-slide" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-smoked-charcoal bg-opacity-50 text-porcelain-white rounded-full p-2 hover:bg-opacity-75 transition">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button id="next-slide" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-smoked-charcoal bg-opacity-50 text-porcelain-white rounded-full p-2 hover:bg-opacity-75 transition">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- Featured products section -->
+  <section class="max-w-7xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-bold warm-taupe mb-8 text-center">Featured Products</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      {% for product in collections.all.products limit:6 %}
+      <div class="border border-smoked-charcoal rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+        <a href="{{ product.url }}">
+          <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}" class="w-full h-64 object-cover" />
+          <div class="p-4 bg-porcelain-white">
+            <h4 class="text-xl font-semibold deep-onyx">{{ product.title }}</h4>
+            <p class="text-warm-taupe mt-2">{{ product.price | money }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+<script>
+  // Simple carousel functionality
+  document.addEventListener('DOMContentLoaded', function () {
+    const slides = document.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('hidden', i !== index);
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    document.getElementById('prev-slide').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide(currentIndex);
+    });
+
+    document.getElementById('next-slide').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    });
+
+    showSlide(currentIndex);
+  });
+</script>
